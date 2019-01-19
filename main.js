@@ -2,6 +2,7 @@
 
 function main() {
 
+    
     var homeScreen =
         `<div id="homeScreen">
              <h1>HOMEEEEE</h1>
@@ -19,10 +20,7 @@ function main() {
     
     var gameScreen =
         `<div id="gameScreen">
-            <h1>JUEEEGO</h1>
-            <div class="buttons">
-                <button class="button button-rules">RULES</button>
-            </div>
+            <canvas id="canvas" width="1200" height="550"></canvas>
         </div>`;
             
     var gameOverScreen =
@@ -49,9 +47,13 @@ function main() {
     function jugar(){
         buildScreen(gameScreen);
         // var game = new Game();
-        setTimeout(gameOver, 3000);
+        var canvas = document.getElementById('canvas');
+        var game = new Game(canvas, gameEndHandler);
+        game.start();
+        var gameEndHandler = function(){
+            game.gameEnd;
+        }
     }
-    
     buildNoGameScreen(homeScreen);
 }
 
