@@ -1,0 +1,28 @@
+* {
+  margin: 0;
+  box-sizing: border-box; }
+
+@font-face {
+  font-family: arcade;
+  src: url("../assets/fonts/ARCADECLASSIC.TTF"); }
+body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center; }
+  body #container {
+    max-width: 1200px;
+    width: 1200px;
+    height: 70vh;
+    border-radius: 50px;
+    background-color: rgba(0, 0, 0, 0.65);
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+    body #container #homeScreen {
+      font-family: arcade;
+      color: white; }
+
+/*# sourceMappingURL=styles.css.map */
