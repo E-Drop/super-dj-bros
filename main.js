@@ -37,14 +37,14 @@ function main() {
             buildScreen(screen);
             document.getElementById("empezar").addEventListener("click", jugar);
         }
-        function jugar(){
-            buildScreen(gameScreen);
-            // var game = new Game();
+    function jugar(){
+        buildScreen(gameScreen);
+        // var game = new Game();
             var canvas = document.getElementById('canvas');
             var gameEndHandler = function(){
-                game.gameEnd;
-                gameOver();
-                clearInterval(interval);
+            game.gameEnd;
+            gameOver();
+            clearInterval(interval);
         }
         var game = new Game(canvas, gameEndHandler);
         var score = 1;
@@ -52,7 +52,6 @@ function main() {
             score +=1;  
             document.getElementById("score").innerHTML = score;
         };
-
         var interval = setInterval(counter, 100);
         game.start();
         function onKeyDown (event) {
@@ -63,9 +62,9 @@ function main() {
             }
         }
         document.addEventListener('keyup', onKeyDown);
-        var gameOver = function() {
-            buildNoGameScreen(gameOverScreen);
-            document.getElementById("scor").innerHTML = score;
+            var gameOver = function() {
+                buildNoGameScreen(gameOverScreen);
+                document.getElementById("scor").innerHTML = score;
         };
     }
     buildNoGameScreen(homeScreen);
