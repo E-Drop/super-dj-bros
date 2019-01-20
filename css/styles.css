@@ -5,6 +5,10 @@
 @font-face {
   font-family: arcade;
   src: url("../assets/fonts/ARCADECLASSIC.TTF"); }
+#score {
+  color: white;
+  font-size: 1.5 rem; }
+
 body {
   width: 100vw;
   height: 100vh;

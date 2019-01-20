@@ -23,7 +23,7 @@ function Game(canvas, gameEndHandler) {
         }.bind(this));
     }
     Game.prototype.createEnemy = function() {
-        if (Math.random() > 0.9 && this.enemy.length < 3) {
+        if (Math.random() > 0.9 && this.enemy.length < 1) {
             this.enemy.push(new Enemy(canvas));
         }
     }

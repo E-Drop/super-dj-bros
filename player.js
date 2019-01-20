@@ -13,7 +13,7 @@ Player.prototype.draw = function() {
 Player.prototype.update = function() {
     if(this.y > (this.canvas.height - 350) && this.y <= this.canvas.height -150){
     } else if(this.y < this.canvas.height -250){
-        this.ySpeed = 7;
+        this.ySpeed = 9;
     }else {
         this.ySpeed = 0;
         this.y = this.canvas.height -150;
@@ -21,13 +21,14 @@ Player.prototype.update = function() {
     this.y += this.ySpeed;
 }
 Player.prototype.checkCollideWithEnemy = function(enemy) {
-    var rightCrash = this.x + this.size > enemy.x;
-    var leftCrash = this.x - this.size < enemy.x + enemy.size;
-    var bottomCrash = this.y + this.size > enemy.y;
-    return rightCrash && bottomCrash;
+    var collidesRight = this.x + this.size / 2 > enemy.x - enemy.size / 2;
+    var collidesLeft = this.x - this.size / 2 < enemy.x + enemy.size / 2;
+    var collidesTop = this.y - this.size / 2 < enemy.y + enemy.size / 2;
+    var collideBottom = this.y + this.size / 2 > enemy.y - enemy.size / 2;
+    return collidesRight && collidesLeft && collidesTop && collideBottom;
 }
 Player.prototype.jump = function(){
     if(this.y === this.canvas.height -150){
-        this.ySpeed = -7;
+        this.ySpeed = -9;
     }
 }

@@ -1,5 +1,5 @@
 'use strict';
-function main() {    
+function main() {
     var homeScreen =
         `<div id="homeScreen">
              <h1>HOMEEEEE</h1>
@@ -16,37 +16,44 @@ function main() {
           </div>`;
     var gameScreen =
         `<div id="gameScreen">
+        <p id="score"></p>
             <canvas id="canvas" width="1200" height="550"></canvas>
         </div>`;
     var gameOverScreen =
         `<div id="gameScreen">
             <h1>gameover</h1>
+            <p id="scor"></p>
             <div class="buttons">
                 <button id="empezar" class="button button-start">INSERT COIN</button>
                 <button class="button button-rules">RULES</button>
             </div>
         </div>`;
-    var gameOver = function() {
-        buildNoGameScreen(gameOverScreen);
-    };
-    // Funcion que añade al elemento con id container el html que se le pasa en la variable del atributo
-    function buildScreen(html) {
-        var container = document.getElementById('container');
-        container.innerHTML = html;
-    } 
-    function buildNoGameScreen(screen) {
-        buildScreen(screen);
-        document.getElementById("empezar").addEventListener("click", jugar);
-    }
-    function jugar(){
-        buildScreen(gameScreen);
-        // var game = new Game();
-        var canvas = document.getElementById('canvas');
-        var gameEndHandler = function(){
-            game.gameEnd;
-            gameOver();
+        // Funcion que añade al elemento con id container el html que se le pasa en la variable del atributo
+        function buildScreen(html) {
+            var container = document.getElementById('container');
+            container.innerHTML = html;
+        } 
+        function buildNoGameScreen(screen) {
+            buildScreen(screen);
+            document.getElementById("empezar").addEventListener("click", jugar);
+        }
+        function jugar(){
+            buildScreen(gameScreen);
+            // var game = new Game();
+            var canvas = document.getElementById('canvas');
+            var gameEndHandler = function(){
+                game.gameEnd;
+                gameOver();
+                clearInterval(interval);
         }
         var game = new Game(canvas, gameEndHandler);
+        var score = 1;
+        function counter(){
+            score +=1;  
+            document.getElementById("score").innerHTML = score;
+        };
+
+        var interval = setInterval(counter, 100);
         game.start();
         function onKeyDown (event) {
             switch (event.keyCode) {
@@ -56,6 +63,10 @@ function main() {
             }
         }
         document.addEventListener('keyup', onKeyDown);
+        var gameOver = function() {
+            buildNoGameScreen(gameOverScreen);
+            document.getElementById("scor").innerHTML = score;
+        };
     }
     buildNoGameScreen(homeScreen);
 }
