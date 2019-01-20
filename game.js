@@ -13,13 +13,17 @@ function Game(canvas, gameEndHandler) {
         // this.player.update();
         this.createEnemy();
         this.player.update();
+        this.enemy = this.enemy.filter(function(enemy) {
+            return enemy.isAlive();
+        });
         this.enemy.forEach(function(item) {
             item.update();
         });
     }
 
     Game.prototype.createEnemy = function() {
-        if (Math.random() > 0.995) {
+        console.log(this.enemy.length);
+        if (Math.random() > 0.9 && this.enemy.length < 3) {
             this.enemy.push(new Enemy(canvas));
         }
     }
