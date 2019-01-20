@@ -53,8 +53,18 @@ function main() {
         var gameEndHandler = function(){
             game.gameEnd;
         }
+        function onKeyDown (event) {
+            switch (event.keyCode) {
+                case 38:
+                    game.onKeyPress();
+                break;
+            }
+        }
+        document.addEventListener('keyup', onKeyDown);
     }
+    
     buildNoGameScreen(homeScreen);
 }
+
 
 window.addEventListener('load', main)

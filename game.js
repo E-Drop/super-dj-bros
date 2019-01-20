@@ -12,15 +12,20 @@ function Game(canvas, gameEndHandler) {
     Game.prototype.updateGame = function() {
         // this.player.update();
         this.createEnemy();
+        this.player.update();
         this.enemy.forEach(function(item) {
             item.update();
         });
     }
 
     Game.prototype.createEnemy = function() {
-        if (Math.random() > 0.99) {
+        if (Math.random() > 0.995) {
             this.enemy.push(new Enemy(canvas));
         }
+    }
+
+    Game.prototype.onKeyPress = function(){
+        this.player.jump();
     }
 
     Game.prototype.clearCanvas = function(){
@@ -48,3 +53,4 @@ function Game(canvas, gameEndHandler) {
         }
         this.animation = window.requestAnimationFrame(loop.bind(this));
     }
+    
