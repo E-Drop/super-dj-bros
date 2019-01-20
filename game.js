@@ -1,5 +1,4 @@
 'use strict';
-
 function Game(canvas, gameEndHandler) {
     this.ctx = canvas.getContext('2d');
     this.player = new Player(canvas);
@@ -8,7 +7,6 @@ function Game(canvas, gameEndHandler) {
     this.gameEndHandler = gameEndHandler;
     this.loopId;
 }
-
     Game.prototype.updateGame = function() {
         // this.player.update();
         this.createEnemy();
@@ -18,24 +16,23 @@ function Game(canvas, gameEndHandler) {
         });
         this.enemy.forEach(function(item) {
             item.update();
-        });
+            if (this.player.checkCollideWithEnemy(item)) {
+                
+                this.gameEndHandler();
+            }
+        }.bind(this));
     }
-
     Game.prototype.createEnemy = function() {
-        console.log(this.enemy.length);
         if (Math.random() > 0.9 && this.enemy.length < 3) {
             this.enemy.push(new Enemy(canvas));
         }
     }
-
     Game.prototype.onKeyPress = function(){
         this.player.jump();
     }
-
     Game.prototype.clearCanvas = function(){
         this.ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
-
     Game.prototype.drawCanvas = function(){
         this.enemy.forEach(function(item) {
             item.draw();
@@ -43,18 +40,15 @@ function Game(canvas, gameEndHandler) {
         this.player.draw();
         this.platform.draw();
     }
-
-    Game.prototype.gameEnd = function(){
-        window.cancelAnimationFrame(this.loopId);
-    }
-
     Game.prototype.start = function() {
         function loop() {
             this.updateGame();
             this.clearCanvas();
             this.drawCanvas();
-            this.animation = window.requestAnimationFrame(loop.bind(this));
+            this.loopID = window.requestAnimationFrame(loop.bind(this));
         }
-        this.animation = window.requestAnimationFrame(loop.bind(this));
+        this.loopID = window.requestAnimationFrame(loop.bind(this));
     }
-    
+    Game.prototype.gameEnd = function(){
+        window.cancelAnimationFrame(this.loopId);
+    }

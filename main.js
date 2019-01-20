@@ -1,8 +1,5 @@
 'use strict';
-
-function main() {
-
-    
+function main() {    
     var homeScreen =
         `<div id="homeScreen">
              <h1>HOMEEEEE</h1>
@@ -17,12 +14,10 @@ function main() {
                <img src='./Images/Map.jpg'>
              </div>
           </div>`;
-    
     var gameScreen =
         `<div id="gameScreen">
             <canvas id="canvas" width="1200" height="550"></canvas>
         </div>`;
-            
     var gameOverScreen =
         `<div id="gameScreen">
             <h1>gameover</h1>
@@ -31,7 +26,6 @@ function main() {
                 <button class="button button-rules">RULES</button>
             </div>
         </div>`;
-            
     var gameOver = function() {
         buildNoGameScreen(gameOverScreen);
     };
@@ -48,11 +42,12 @@ function main() {
         buildScreen(gameScreen);
         // var game = new Game();
         var canvas = document.getElementById('canvas');
-        var game = new Game(canvas, gameEndHandler);
-        game.start();
         var gameEndHandler = function(){
             game.gameEnd;
+            gameOver();
         }
+        var game = new Game(canvas, gameEndHandler);
+        game.start();
         function onKeyDown (event) {
             switch (event.keyCode) {
                 case 38:
@@ -62,9 +57,6 @@ function main() {
         }
         document.addEventListener('keyup', onKeyDown);
     }
-    
     buildNoGameScreen(homeScreen);
 }
-
-
 window.addEventListener('load', main)
