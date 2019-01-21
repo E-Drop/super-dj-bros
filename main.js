@@ -1,4 +1,5 @@
 'use strict';
+
 function main() {
     var homeScreen =
         `<div id="homeScreen">
@@ -50,21 +51,17 @@ function main() {
         var score = 1;
         function counter(){
             score +=1;  
-            document.getElementById("score").innerHTML = score;
+            document.getElementById("score").innerHTML = `SCORE: ${score}`;
         };
         var interval = setInterval(counter, 100);
         game.start();
         function onKeyDown (event) {
-            switch (event.keyCode) {
-                case 38:
-                    game.onKeyPress();
-                break;
-            }
+            (event.keyCode === 38 || event.keyCode === 32) ? game.onKeyPress() : null; 
         }
         document.addEventListener('keyup', onKeyDown);
             var gameOver = function() {
                 buildNoGameScreen(gameOverScreen);
-                document.getElementById("scor").innerHTML = score;
+                document.getElementById("scor").innerHTML = `SCORE : ${score}`;
         };
     }
     buildNoGameScreen(homeScreen);

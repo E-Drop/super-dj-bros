@@ -37,8 +37,8 @@ function Game(canvas, gameEndHandler) {
         this.enemy.forEach(function(item) {
             item.draw();
         });
-        this.player.draw();
         this.platform.draw();
+        this.player.draw();
     }
     Game.prototype.start = function() {
         function loop() {

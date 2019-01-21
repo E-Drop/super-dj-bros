@@ -7,5 +7,7 @@ function Platform(canvas){
     this.ctx = canvas.getContext('2d');
 }
 Platform.prototype.draw = function() {
-    this.ctx.fillRect(this.x, this.y, this.sizeW, this.sizeH);
+    var img = new Image();
+    img.src = './assets/img/floor.png';
+    this.ctx.drawImage(img, this.x, this.y, this.sizeW, this.sizeH);
 }
