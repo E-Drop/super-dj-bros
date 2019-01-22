@@ -39,7 +39,6 @@ Player.prototype.checkCollideWithEnemy = function(enemy) {
     var collidesLeft = this.x - this.size / 2 < enemy.x + enemy.size / 2;
     var collidesTop = this.y - this.size / 2 < enemy.y + enemy.size / 2;
     var collideBottom = this.y + this.size / 2 > enemy.y - enemy.size / 2;
-    console.log(`${this.y + this.size}  ${enemy.y}`);
     if(this.y + this.size - 5 === enemy.y && this.x + this.size * 0.5 > enemy.x + enemy.size * 0.25 && this.x < enemy.x + enemy.size * 0.75 ){
         return "d";
     }else{

@@ -18,7 +18,7 @@ function main() {
     var gameScreen =
         `<div id="gameScreen">
         <p id="score"></p>
-            <canvas id="canvas" width="1200" height="550"></canvas>
+            <canvas id="canvas" width="1200" height="610"></canvas>
         </div>`;
     var gameOverScreen =
         `<div id="gameScreen">
@@ -42,6 +42,12 @@ function main() {
         buildScreen(gameScreen);
         // var game = new Game();
             var canvas = document.getElementById('canvas');
+            canvas.width = 1200;
+            canvas.height = 610;
+            var background = new Image();
+            background.src = "./assets/img/clouds.png";
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(background,0,0); 
             var gameEndHandler = function(){
             game.gameEnd;
             gameOver();
@@ -55,23 +61,36 @@ function main() {
         };
         var interval = setInterval(counter, 100);
         game.start();
+        var movements = [];
         function onKeyDown (event) {
-            switch (event.keyCode) {
-                case 38:
+            console.log('call', movements)
+            if(event) {
+                if (!movements.includes(event.keyCode)) {
+                    movements.push(event.keyCode);
+                }
+                if(movements.includes(38)){
                     game.onKeyPress();
-                break;
-                case 32:
+                }
+                if(movements.includes(32)){
                     game.onKeyPress();
-                break;
-                case 37:
+                }
+                if(movements.includes(37)){
                     game.moveLeft();
-                break;
-                case 39:
+                }
+                if(movements.includes(39)){
+                    console.log("detecto");
                     game.moveRight();
-                break;
-
+                }
             }
         }
+        function removeKey(event) {
+            var index = movements.indexOf(event.keyCode);
+            movements.splice(index, 1);
+            console.log(event.keyCode)
+            onKeyDown ();
+        }
+
+        document.addEventListener('keyup', removeKey);
         document.addEventListener('keydown', onKeyDown);
             var gameOver = function() {
                 buildNoGameScreen(gameOverScreen);
@@ -80,4 +99,4 @@ function main() {
     }
     buildNoGameScreen(homeScreen);
 }
-window.addEventListener('load', main)
+window.addEventListener('load', main);

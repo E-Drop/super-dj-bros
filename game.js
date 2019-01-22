@@ -47,6 +47,7 @@ Game.prototype.moveLeft = function(){
     })
 }
 Game.prototype.moveRight = function(){
+    console.log("entro en game");
     this.platform.forEach(function(item) {
         item.moveRight();
     });
