@@ -1,7 +1,7 @@
 'use strict';
 function Player(canvas){
     this.size = 50;
-    this.x = 50;
+    this.x = canvas.width/2;
     this.y = (canvas.height)-150;
     this.ySpeed = 0;
     this.canvas = canvas;
@@ -32,6 +32,27 @@ Player.prototype.update = function() {
     }
 }
 Player.prototype.changeImg = function() {
+    
+}
+Player.prototype.checkCollideWithEnemy = function(enemy) {
+    var collidesRight = this.x + this.size / 2 > enemy.x - enemy.size / 2;
+    var collidesLeft = this.x - this.size / 2 < enemy.x + enemy.size / 2;
+    var collidesTop = this.y - this.size / 2 < enemy.y + enemy.size / 2;
+    var collideBottom = this.y + this.size / 2 > enemy.y - enemy.size / 2;
+    console.log(`${this.y + this.size}  ${enemy.y}`);
+    if(this.y + this.size - 5 === enemy.y && this.x + this.size * 0.5 > enemy.x + enemy.size * 0.25 && this.x < enemy.x + enemy.size * 0.75 ){
+        return "d";
+    }else{
+        return collidesRight && collidesLeft && collidesTop && collideBottom;
+    }
+}
+Player.prototype.jump = function(){
+    if(this.y === this.canvas.height -150){
+        this.ySpeed = -9;
+        this.image.src = `${this.pathImg}jump.png`;
+    }
+}
+Player.prototype.moveRight= function(){
     if(this.y < this.canvas.height-150){
         this.image.src = `${this.pathImg}jump.png`;
     }else if((this.image.src.substring(this.image.src.lastIndexOf("/")+1) === 'correr.png' || this.image.src.substring(this.image.src.lastIndexOf("/")+1) === 'jump.png') && this.counter < 30){
@@ -44,16 +65,16 @@ Player.prototype.changeImg = function() {
     }
     this.counter++;
 }
-Player.prototype.checkCollideWithEnemy = function(enemy) {
-    var collidesRight = this.x + this.size / 2 > enemy.x - enemy.size / 2;
-    var collidesLeft = this.x - this.size / 2 < enemy.x + enemy.size / 2;
-    var collidesTop = this.y - this.size / 2 < enemy.y + enemy.size / 2;
-    var collideBottom = this.y + this.size / 2 > enemy.y - enemy.size / 2;
-    return collidesRight && collidesLeft && collidesTop && collideBottom;
-}
-Player.prototype.jump = function(){
-    if(this.y === this.canvas.height -150){
-        this.ySpeed = -9;
+Player.prototype.moveLeft = function(){
+    if(this.y < this.canvas.height-150){
         this.image.src = `${this.pathImg}jump.png`;
+    }else if((this.image.src.substring(this.image.src.lastIndexOf("/")+1) === 'correr.png' || this.image.src.substring(this.image.src.lastIndexOf("/")+1) === 'jump.png') && this.counter < 30){
+        this.image.src = `${this.pathImg}caida.png`;
+    }else {
+        this.image.src = `${this.pathImg}correr.png`;
+        if(this.counter === 60){
+            this.counter = 0;
+        }
     }
+    this.counter++;
 }

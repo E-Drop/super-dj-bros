@@ -3,7 +3,7 @@ function Enemy(canvas) {
     this.size = 50;
     this.y = (canvas.height)-150;
     this.x = canvas.width-50;
-    this.xSpeed = Math.floor((Math.random()*20)+10);
+    this.xSpeed = 3;
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
     this.image = new Image();
@@ -18,4 +18,13 @@ Enemy.prototype.isAlive = function() {
 }
 Enemy.prototype.update = function() {
     this.x -= this.xSpeed;
+}
+Enemy.prototype.die = function(){
+    this.x = -999;
+}
+Enemy.prototype.rightLow = function(){
+    this.x -= 8;
+}
+Enemy.prototype.leftLow = function(){
+    this.x += 12;
 }

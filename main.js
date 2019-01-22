@@ -56,9 +56,23 @@ function main() {
         var interval = setInterval(counter, 100);
         game.start();
         function onKeyDown (event) {
-            (event.keyCode === 38 || event.keyCode === 32) ? game.onKeyPress() : null; 
+            switch (event.keyCode) {
+                case 38:
+                    game.onKeyPress();
+                break;
+                case 32:
+                    game.onKeyPress();
+                break;
+                case 37:
+                    game.moveLeft();
+                break;
+                case 39:
+                    game.moveRight();
+                break;
+
+            }
         }
-        document.addEventListener('keyup', onKeyDown);
+        document.addEventListener('keydown', onKeyDown);
             var gameOver = function() {
                 buildNoGameScreen(gameOverScreen);
                 document.getElementById("scor").innerHTML = `SCORE : ${score}`;
