@@ -24,18 +24,16 @@ Game.prototype.updateGame = function() {
         if(this.player.checkCollideWithEnemy(item) === "d"){
             item.die();
         }else if (this.player.checkCollideWithEnemy(item)) {
+            this.clearCanvas();
             this.gameEndHandler();
         }
     }.bind(this));
-    this.player.isColliding = false;
     this.platforms.forEach(function(item) {
         if(item.checkPlayerCollision(this.player)){
-            console.log(item.checkPlayerCollision(this.player));
             switch(item.checkPlayerCollision(this.player)) {
                 case 't':
                 this.player.direction = 1;
                 this.player.y = item.y + item.sizeH;
-
                 break;
                 case 'b':
                 this.player.direction = 0;
@@ -44,7 +42,9 @@ Game.prototype.updateGame = function() {
                 case 'a':
                 this.player.direction = 1;
                 break;
-            } 
+                default:
+                break;
+            }
         }
     }.bind(this));
 }

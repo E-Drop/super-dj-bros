@@ -11,13 +11,23 @@ function Player(canvas){
     this.pathImg = './assets/img/';
     this.image.src = `${this.pathImg}caida.png`;
     this.counter = 0;
-    this.isColliding = false;
+    this.isJumping = false;
+    this.jumpStart = 0;
 }
 Player.prototype.draw = function() {
     this.ctx.drawImage(this.image, this.x, this.y, this.size, this.size);
 }
 Player.prototype.update = function() {
-    this.y += this.direction * this.ySpeed;
+    if(this.isJumping && this.y > this.jumpStart - 100){
+        this.y -= this.ySpeed;
+        console.log(this.y , this.jumpStart, this.isJumping);
+    }else if (this.y >= this.jumpStart - 110){
+        this.isJumping = false;
+        this.y += this.ySpeed;
+    }else{
+        this.y += this.direction * this.ySpeed; 
+    }
+    
 }
 Player.prototype.changeImg = function() {
     
@@ -27,15 +37,19 @@ Player.prototype.checkCollideWithEnemy = function(enemy) {
     var collidesLeft = this.x - this.size / 2 < enemy.x + enemy.size / 2;
     var collidesTop = this.y - this.size / 2 < enemy.y + enemy.size / 2;
     var collideBottom = this.y + this.size / 2 > enemy.y - enemy.size / 2;
-    if(this.y + this.size - 5 === enemy.y && this.x + this.size * 0.5 > enemy.x + enemy.size * 0.25 && this.x < enemy.x + enemy.size * 0.75 ){
+    if(this.y + this.size >= enemy.y && this.x + this.size / 2 > enemy.x && this.x < enemy.x + enemy.size ){
         return "d";
     }else{
-        return collidesRight && collidesLeft && collidesTop && collideBottom;
+        if(collidesRight && collidesLeft ){
+        }
+        return collidesRight && collidesLeft && collideBottom;
     }
 }
 Player.prototype.jump = function(){
-    this.direction = -1;
+    this.jumpStart = this.y;
+    this.isJumping = true;
     this.image.src = `${this.pathImg}jump.png`;
+    console.log(this.isJumping);
 }
 Player.prototype.moveRight= function(){
     if(this.y < this.canvas.height-150){
