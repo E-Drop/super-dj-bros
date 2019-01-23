@@ -42,12 +42,6 @@ function main() {
         buildScreen(gameScreen);
         // var game = new Game();
             var canvas = document.getElementById('canvas');
-            canvas.width = 1200;
-            canvas.height = 610;
-            var background = new Image();
-            background.src = "./assets/img/clouds.png";
-            var ctx = canvas.getContext("2d");
-            ctx.drawImage(background,0,0); 
             var gameEndHandler = function(){
             game.gameEnd;
             gameOver();
@@ -61,37 +55,7 @@ function main() {
         };
         var interval = setInterval(counter, 100);
         game.start();
-        var movements = [];
-        function onKeyDown (event) {
-            console.log('call', movements)
-            if(event) {
-                if (!movements.includes(event.keyCode)) {
-                    movements.push(event.keyCode);
-                }
-                if(movements.includes(38)){
-                    game.onKeyPress();
-                }
-                if(movements.includes(32)){
-                    game.onKeyPress();
-                }
-                if(movements.includes(37)){
-                    game.moveLeft();
-                }
-                if(movements.includes(39)){
-                    console.log("detecto");
-                    game.moveRight();
-                }
-            }
-        }
-        function removeKey(event) {
-            var index = movements.indexOf(event.keyCode);
-            movements.splice(index, 1);
-            console.log(event.keyCode)
-            onKeyDown ();
-        }
-
-        document.addEventListener('keyup', removeKey);
-        document.addEventListener('keydown', onKeyDown);
+        
             var gameOver = function() {
                 buildNoGameScreen(gameOverScreen);
                 document.getElementById("scor").innerHTML = `SCORE : ${score}`;

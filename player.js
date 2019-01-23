@@ -17,7 +17,7 @@ Player.prototype.draw = function() {
 Player.prototype.update = function() {
     if(this.y > (this.canvas.height - 350) && this.y <= this.canvas.height -150){
         if(this.y === canvas.height-150){
-            this.changeImg();    
+            this.changeImg();
         }
     } else if(this.y < this.canvas.height -250){
         this.ySpeed = 9;

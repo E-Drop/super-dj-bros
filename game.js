@@ -2,15 +2,18 @@
 function Game(canvas, gameEndHandler) {
     this.ctx = canvas.getContext('2d');
     this.player = new Player(canvas);
+    this.canvas = canvas;
     this.enemy = [];
     this.platform = [];
     this.gameEndHandler = gameEndHandler;
     this.loopId;
     this.keyLeft = false;
     this.keyRight = false;
+    this.movements = [];
 }
 Game.prototype.updateGame = function() {
     // this.player.update();
+    this.checkArray();
     this.createEnemy();
     this.player.update();
     this.enemy = this.enemy.filter(function(enemy) {
@@ -23,6 +26,11 @@ Game.prototype.updateGame = function() {
         }else if (this.player.checkCollideWithEnemy(item)) {
             this.gameEndHandler();
         }
+    }.bind(this));
+    this.platform.forEach(function(item) {
+        if(item.checkPlayerCollision(this.player)){
+        }
+        
     }.bind(this));
 }
 Game.prototype.createEnemy = function() {
@@ -47,7 +55,6 @@ Game.prototype.moveLeft = function(){
     })
 }
 Game.prototype.moveRight = function(){
-    console.log("entro en game");
     this.platform.forEach(function(item) {
         item.moveRight();
     });
@@ -57,7 +64,7 @@ Game.prototype.moveRight = function(){
     })
 }
 Game.prototype.clearCanvas = function(){
-    this.ctx.clearRect(0, 0, canvas.width, canvas.height);
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 }
 Game.prototype.drawCanvas = function(){
     this.enemy.forEach(function(item) {
@@ -69,6 +76,9 @@ Game.prototype.drawCanvas = function(){
     this.player.draw();
 }
 Game.prototype.start = function() {
+    document.addEventListener('keyup', this.removeKey.bind(this));
+    document.addEventListener('keydown', this.onKeyDown.bind(this));
+    
     this.createLevel();
     function loop() {
         this.updateGame();
@@ -81,3 +91,32 @@ Game.prototype.start = function() {
 Game.prototype.gameEnd = function(){
     window.cancelAnimationFrame(this.loopId);
 }
+
+
+ Game.prototype.onKeyDown = function (event) {
+    if(event) {
+        if (!this.movements.includes(event.keyCode)) {
+            this.movements.push(event.keyCode);
+        }
+    }
+}
+ Game.prototype.removeKey = function(event) {
+    var index = this.movements.indexOf(event.keyCode);
+    this.movements.splice(index, 1);
+    
+}
+Game.prototype.checkArray = function() {
+    if(this.movements.includes(38)){
+        this.onKeyPress();
+    }
+    if(this.movements.includes(32)){
+        this.onKeyPress();
+    }
+    if(this.movements.includes(37)){
+        this.moveLeft();
+    }
+    if(this.movements.includes(39)){
+        this.moveRight();
+    }
+}
+

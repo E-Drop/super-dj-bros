@@ -31,8 +31,23 @@ Platform.prototype.moveLeft = function(){
 Platform.prototype.moveRight = function(){
     this.x -=10;
 }
-Platform.prototype.checkPlayerUp = function(player) {
-    var collidesTop = this.y - this.size / 2 < player.y + player.size / 2;
-    var collideBottom = this.y + this.size / 2 > player.y - player.size / 2;
-    return collidesTop && collideBottom;
+Platform.prototype.checkPlayerCollision = function(player) {
+    
+    if(this.x + this.sizeW === player.x && this.y <= player.y && this.y + this.sizeH >= player.y){
+    //collides on players Left -- Left 
+        console.log("l");
+        return "l";
+    }else if(this.y + this.sizeH >= player.y && this.y < player.y  && this.x <= player.x + player.size / 2 && this.x + this.sizeW >= player.x){
+    //collides on players Top -- Top
+        console.log("t");
+        return "t";
+    }else if((this.y === player.y + player.size) && (this.x < player.x && this.x + this.sizeW > player.x)){
+    //collides on players Bottom -- Bottom
+        console.log("b");
+        return "b";
+    }else if(this.x <= player.x + player.size / 2 && this.y >= player.y && this.y + this.sizeH <= player.y){
+    //collides on players Right -- Rights
+        console.log("r");
+        return "r";
+    }
 }
