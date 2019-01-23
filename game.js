@@ -1,10 +1,10 @@
 'use strict';
 function Game(canvas, gameEndHandler) {
+    this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
     this.player = new Player(canvas);
-    this.canvas = canvas;
     this.enemy = [];
-    this.platform = [];
+    this.platforms = [];
     this.gameEndHandler = gameEndHandler;
     this.loopId;
     this.keyLeft = false;
@@ -27,10 +27,25 @@ Game.prototype.updateGame = function() {
             this.gameEndHandler();
         }
     }.bind(this));
-    this.platform.forEach(function(item) {
+    this.player.isColliding = false;
+    this.platforms.forEach(function(item) {
         if(item.checkPlayerCollision(this.player)){
+            console.log(item.checkPlayerCollision(this.player));
+            switch(item.checkPlayerCollision(this.player)) {
+                case 't':
+                this.player.direction = 1;
+                this.player.y = item.y + item.sizeH;
+
+                break;
+                case 'b':
+                this.player.direction = 0;
+                this.player.y = item.y - this.player.size;
+                break;
+                case 'a':
+                this.player.direction = 1;
+                break;
+            } 
         }
-        
     }.bind(this));
 }
 Game.prototype.createEnemy = function() {
@@ -39,14 +54,14 @@ Game.prototype.createEnemy = function() {
     }
 }
 Game.prototype.createLevel = function(){
-    this.platform.push(new Platform(canvas, 0, 0, true, 12000));
-    this.platform.push(new Platform(canvas, canvas.width, canvas.height-250, false, 350));
+    this.platforms.push(new Platform(canvas, 0, canvas.height - 100, true, 12000, 200));
+    this.platforms.push(new Platform(canvas, canvas.width, canvas.height-250, false, 350, 50));
 }
 Game.prototype.onKeyPress = function(){
     this.player.jump();
 }
 Game.prototype.moveLeft = function(){
-    this.platform.forEach(function(item) {
+    this.platforms.forEach(function(item) {
         item.moveLeft();
     });
     this.player.moveLeft();
@@ -55,7 +70,7 @@ Game.prototype.moveLeft = function(){
     })
 }
 Game.prototype.moveRight = function(){
-    this.platform.forEach(function(item) {
+    this.platforms.forEach(function(item) {
         item.moveRight();
     });
     this.player.moveRight();
@@ -67,10 +82,13 @@ Game.prototype.clearCanvas = function(){
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 }
 Game.prototype.drawCanvas = function(){
+    var img = new Image();
+    img.src = "./assets/img/clouds.png";
+    this.ctx.drawImage(img, 0, 0);
     this.enemy.forEach(function(item) {
         item.draw();
     });
-    this.platform.forEach(function(item) {
+    this.platforms.forEach(function(item) {
         item.draw();
     });
     this.player.draw();

@@ -1,5 +1,4 @@
 'use strict';
-
 function main() {
     var homeScreen =
         `<div id="homeScreen">
@@ -29,15 +28,15 @@ function main() {
                 <button class="button button-rules">RULES</button>
             </div>
         </div>`;
-        // Funcion que añade al elemento con id container el html que se le pasa en la variable del atributo
-        function buildScreen(html) {
-            var container = document.getElementById('container');
-            container.innerHTML = html;
-        } 
-        function buildNoGameScreen(screen) {
-            buildScreen(screen);
-            document.getElementById("empezar").addEventListener("click", jugar);
-        }
+    // Funcion que añade al elemento con id container el html que se le pasa en la variable del atributo
+    function buildScreen(html) {
+        var container = document.getElementById('container');
+        container.innerHTML = html;
+    } 
+    function buildNoGameScreen(screen) {
+        buildScreen(screen);
+        document.getElementById("empezar").addEventListener("click", jugar);
+    }
     function jugar(){
         buildScreen(gameScreen);
         // var game = new Game();
@@ -50,12 +49,11 @@ function main() {
         var game = new Game(canvas, gameEndHandler);
         var score = 1;
         function counter(){
-            score +=1;  
+            score +=1;
             document.getElementById("score").innerHTML = `SCORE: ${score}`;
         };
         var interval = setInterval(counter, 100);
         game.start();
-        
             var gameOver = function() {
                 buildNoGameScreen(gameOverScreen);
                 document.getElementById("scor").innerHTML = `SCORE : ${score}`;
