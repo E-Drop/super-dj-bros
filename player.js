@@ -67,7 +67,7 @@ Player.prototype.moveRight= function(){
     this.counter++;
 }
 Player.prototype.moveLeft = function(){
-    if(this.y < this.canvas.height-150){
+    if(this.isJumping){
         this.image.src = `${this.pathImg}jump.png`;
     }else if((this.image.src.substring(this.image.src.lastIndexOf("/")+1) === 'correr.png' || this.image.src.substring(this.image.src.lastIndexOf("/")+1) === 'jump.png') && this.counter < 30){
         this.image.src = `${this.pathImg}caida.png`;

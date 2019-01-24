@@ -1,7 +1,7 @@
 'use strict';
 function Enemy(canvas) {
     this.size = 50;
-    this.y = (canvas.height)-150;
+    this.y = (canvas.height)-125;
     this.x = canvas.width-50;
     this.xSpeed = 3;
     this.canvas = canvas;
