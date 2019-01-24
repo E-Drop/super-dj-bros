@@ -32,15 +32,23 @@ Game.prototype.updateGame = function() {
         if(item.checkPlayerCollision(this.player)){
             switch(item.checkPlayerCollision(this.player)) {
                 case 't':
-                this.player.direction = 1;
-                this.player.y = item.y + item.sizeH;
+                if(this.player.isJumping){
+                    this.player.isCT = true;
+                    this.player.isCB = false;
+                    this.player.direction = 1;
+                    this.player.y = item.y + item.sizeH;
+                }
                 break;
                 case 'b':
+                if(!this.player.isJumping){
+                this.player.isCT = false;
+                this.player.isCB = true;
                 this.player.direction = 0;
                 this.player.y = item.y - this.player.size;
+                }
                 break;
                 case 'a':
-                this.player.direction = 1;
+                
                 break;
                 default:
                 break;
@@ -54,11 +62,12 @@ Game.prototype.createEnemy = function() {
     }
 }
 Game.prototype.createLevel = function(){
-    this.platforms.push(new Platform(canvas, 0, canvas.height - 100, true, 12000, 200));
-    this.platforms.push(new Platform(canvas, canvas.width, canvas.height-250, false, 350, 50));
+    this.platforms.push(new Platform(canvas, 0, canvas.height - 75, true, 12000, 200));
+    this.platforms.push(new Platform(canvas, canvas.width, canvas.height-275, false, 350, 50));
 }
 Game.prototype.onKeyPress = function(){
     this.player.jump();
+    this.player.isCB = false;
 }
 Game.prototype.moveLeft = function(){
     this.platforms.forEach(function(item) {
