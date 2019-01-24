@@ -5,13 +5,14 @@ function Game(canvas, gameEndHandler) {
     this.player = new Player(canvas);
     this.enemy = [];
     this.platforms = [];
+    this.vinilos = [];
     this.gameEndHandler = gameEndHandler;
     this.loopId;
     this.keyLeft = false;
     this.keyRight = false;
     this.movements = [];
     this.song = new Audio('./assets/img/music.mp3');
-    
+    this.musicBox = ['./assets/img/james.mp3','./assets/img/jackson.mp3','./assets/img/give-to-me.mp3'];
 }
 Game.prototype.updateGame = function() {
     // this.player.update();
@@ -31,6 +32,17 @@ Game.prototype.updateGame = function() {
             this.clearCanvas();
             this.song.pause();
             this.gameEndHandler();
+        }
+    }.bind(this));
+    this.vinilos = this.vinilos.filter(function(vinilo) {
+        return vinilo.isInScreen();
+    });
+    this.vinilos.forEach(function(item) {
+        if (this.player.checkCollideWithVinilo(item)) {
+            this.song.pause();
+            this.song.src = this.musicBox[Math.floor(Math.random() * 3)];
+            this.song.play();
+            item.desapear();     
         }
     }.bind(this));
 
@@ -88,7 +100,10 @@ Game.prototype.createLevel = function(){
     this.platforms.push(new Platform(canvas, 0, canvas.height - 75, true, canvas.width + 550, 200));
     this.platforms.push(new Platform(canvas, canvas.width + 850, canvas.height - 75, true, canvas.width , 200));
     this.platforms.push(new Platform(canvas, canvas.width + 1050, canvas.height - 75, true, canvas.width , 200));
+    this.platforms.push(new Platform(canvas, canvas.width * 2 + 1500, canvas.height - 75, true, canvas.width , 200));
     this.platforms.push(new Platform(canvas, canvas.width, canvas.height-275, false, 350, 50));
+    this.vinilos.push(new Vinilo(canvas, canvas.width + 300 , canvas.height -325));
+    this.vinilos.push(new Vinilo(canvas, canvas.width * 2 + 1800 , canvas.height -125));
 }
 Game.prototype.onKeyPress = function(){
     this.player.jump();
@@ -98,6 +113,9 @@ Game.prototype.moveLeft = function(){
     this.platforms.forEach(function(item) {
         item.moveLeft();
     });
+    this.vinilos.forEach(function(item) {
+        item.moveLeft();
+    });
     this.player.moveLeft();
     this.enemy.forEach(function(item) {
         item.leftLow();
@@ -105,6 +123,9 @@ Game.prototype.moveLeft = function(){
 }
 Game.prototype.moveRight = function(){
     this.platforms.forEach(function(item) {
+        item.moveRight();
+    });
+    this.vinilos.forEach(function(item) {
         item.moveRight();
     });
     this.player.moveRight();
@@ -119,6 +140,9 @@ Game.prototype.drawCanvas = function(){
     var img = new Image();
     img.src = "./assets/img/clouds.png";
     this.ctx.drawImage(img, 0, 0);
+    this.vinilos.forEach(function(item) {
+        item.draw();
+    });
     this.enemy.forEach(function(item) {
         item.draw();
     });

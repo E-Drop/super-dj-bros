@@ -28,15 +28,11 @@ Player.prototype.draw = function() {
     this.ctx.drawImage(this.image, this.x, this.y, this.size, this.size);
 }
 Player.prototype.update = function() {
-    console.log(this.isBouncing);
     if(this.isJumping && this.y > this.jumpStart - 200 && !this.isCT && !this.isBouncing){
-        console.log("problema uno");
         this.direction = -1;
     }else if (this.isBouncing && this.y > this.bounceStart - 80 && !this.isCT){
-        console.log("problema inexplicable");
         this.direction = -1;
     }else if (this.y >= this.jumpStart - 210 || this.isCT || this.y > this.bounceStart - 90){
-        console.log("problema dos");
         this.isJumping = false;
         this.isBouncing = false;
         this.direction = 1;
@@ -56,11 +52,21 @@ Player.prototype.checkCollideWithEnemy = function(enemy) {
         this.stompSound.play();
         return "d";
     }else{
-        if(collidesRight && collidesLeft && collideBottom){
+        if(collidesRight && collidesLeft && collideBottom && enemy.notStomped){
             this.dieSong.play();
         }
-        return collidesRight && collidesLeft && collideBottom ;
+        if(enemy.notStomped){
+            return collidesRight && collidesLeft && collideBottom ;
+        }
     }
+}
+
+Player.prototype.checkCollideWithVinilo = function(enemy) {
+    var collidesRight = this.x + this.size / 2 > enemy.x - enemy.size / 2;
+    var collidesLeft = this.x - this.size / 2 < enemy.x + enemy.size / 2;
+    var collidesTop = this.y - this.size / 2 < enemy.y + enemy.size / 2;
+    var collideBottom = this.y + this.size / 2 > enemy.y - enemy.size / 2;
+    return collidesRight && collidesLeft && collideBottom && collidesTop;
 }
 Player.prototype.jump = function(){
     if(this.isCB){
