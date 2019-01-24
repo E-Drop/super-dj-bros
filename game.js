@@ -23,7 +23,7 @@ Game.prototype.updateGame = function() {
         item.update();
         if(this.player.checkCollideWithEnemy(item) === "d"){
             item.die();
-        }else if (this.player.checkCollideWithEnemy(item)) {
+        }else if (this.player.checkCollideWithEnemy(item) || this.player.y > canvas.height) {
             this.clearCanvas();
             this.gameEndHandler();
         }
@@ -62,7 +62,9 @@ Game.prototype.createEnemy = function() {
     }
 }
 Game.prototype.createLevel = function(){
-    this.platforms.push(new Platform(canvas, 0, canvas.height - 75, true, 12000, 200));
+    this.platforms.push(new Platform(canvas, 0, canvas.height - 75, true, canvas.width + 550, 200));
+    this.platforms.push(new Platform(canvas, canvas.width + 850, canvas.height - 75, true, canvas.width , 200));
+    this.platforms.push(new Platform(canvas, canvas.width + 1050, canvas.height - 75, true, canvas.width , 200));
     this.platforms.push(new Platform(canvas, canvas.width, canvas.height-275, false, 350, 50));
 }
 Game.prototype.onKeyPress = function(){
