@@ -100,7 +100,7 @@ Game.prototype.createLevel = function(){
     this.platforms.push(new Platform(canvas, 0, canvas.height - 75, true, canvas.width + 550, 200));
     this.platforms.push(new Platform(canvas, canvas.width + 850, canvas.height - 75, true, canvas.width , 200));
     this.platforms.push(new Platform(canvas, canvas.width + 1050, canvas.height - 75, true, canvas.width , 200));
-    this.platforms.push(new Platform(canvas, canvas.width * 2 + 1500, canvas.height - 75, true, canvas.width , 200));
+    this.platforms.push(new Platform(canvas, canvas.width * 2 + 1300, canvas.height - 75, true, canvas.width , 200));
     this.platforms.push(new Platform(canvas, canvas.width, canvas.height-275, false, 350, 50));
     this.vinilos.push(new Vinilo(canvas, canvas.width + 300 , canvas.height -325));
     this.vinilos.push(new Vinilo(canvas, canvas.width * 2 + 1800 , canvas.height -125));
