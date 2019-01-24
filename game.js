@@ -10,6 +10,8 @@ function Game(canvas, gameEndHandler) {
     this.keyLeft = false;
     this.keyRight = false;
     this.movements = [];
+    this.song = new Audio('./assets/img/music.mp3');
+    
 }
 Game.prototype.updateGame = function() {
     // this.player.update();
@@ -22,16 +24,37 @@ Game.prototype.updateGame = function() {
     this.enemy.forEach(function(item) {
         item.update();
         if(this.player.checkCollideWithEnemy(item) === "d"){
+            this.player.isBouncing = true;
+            this.player.bounceStart = this.player.y;
             item.die();
         }else if (this.player.checkCollideWithEnemy(item) || this.player.y > canvas.height) {
             this.clearCanvas();
+            this.song.pause();
             this.gameEndHandler();
         }
+    }.bind(this));
+
+    this.platforms.forEach(function(platform) {
+        this.enemy.forEach(function(enemy) {
+            if(platform.checkEnemyCollision(enemy)){
+                switch(platform.checkEnemyCollision(enemy)) {
+                    case 'enemy b':
+                    enemy.yDirection = 0;
+                    enemy.y = platform.y - enemy.size;
+                    break;
+                    case 'enemy a':
+                    enemy.yDirection = 1;
+                    break;
+                    default:
+                    break;
+                }
+            }
+        }.bind(this));
     }.bind(this));
     this.platforms.forEach(function(item) {
         if(item.checkPlayerCollision(this.player)){
             switch(item.checkPlayerCollision(this.player)) {
-                case 't':
+                case 'player t':
                 if(this.player.isJumping){
                     this.player.isCT = true;
                     this.player.isCB = false;
@@ -39,7 +62,7 @@ Game.prototype.updateGame = function() {
                     this.player.y = item.y + item.sizeH;
                 }
                 break;
-                case 'b':
+                case 'player b':
                 if(!this.player.isJumping){
                 this.player.isCT = false;
                 this.player.isCB = true;
@@ -47,7 +70,7 @@ Game.prototype.updateGame = function() {
                 this.player.y = item.y - this.player.size;
                 }
                 break;
-                case 'a':
+                case 'player a':
                 
                 break;
                 default:
@@ -105,6 +128,7 @@ Game.prototype.drawCanvas = function(){
     this.player.draw();
 }
 Game.prototype.start = function() {
+    this.song.play();
     document.addEventListener('keyup', this.removeKey.bind(this));
     document.addEventListener('keydown', this.onKeyDown.bind(this));
     

@@ -30,12 +30,23 @@ Platform.prototype.checkPlayerCollision = function(player) {
     if(this.x <= player.x + player.size / 2 && this.x + this.sizeW >= player.x){
         if(player.y <= this.sizeH + this.y && player.y >= this.y + this.sizeH -15 ){
             //collides on players Top -- Top
-            return "t";
+            return "player t";
         }else if((player.y + player.size>= this.y && player.y + player.size <= this.y+15)){
             //collides on players Bottom -- Bottom
-            return "b";
+            return "player b";
         }else {
-            return "a";
+            return "player a";
         }
+    }
+}
+
+Platform.prototype.checkEnemyCollision = function(enemy) {
+    if(this.x <= enemy.x + enemy.size / 2 && this.x + this.sizeW >= enemy.x){
+        if((enemy.y + enemy.size>= this.y && enemy.y + enemy.size <= this.y+15)){
+            //collides on enemys Bottom -- Bottom
+            return "enemy b";
+        }
+    }else {
+        return "enemy a";
     }
 }
