@@ -7,10 +7,22 @@
     font-family: arcade;
     src: url('../assets/fonts/ARCADECLASSIC.TTF');
 }
+@font-face {
+    font-family: mario;
+    src: url('../assets/fonts/smb.ttf');
+}
 
 #score {
-    color:white;
-    font-size: 1.5 rem;
+    color: white;
+    font-size: 1rem;
+    text-align: center;
+    background-image: url(../assets/img/clouds.png);
+}
+h1 {
+    font-family: mario;
+    font-size: 5rem;
+    color: white;
+    text-shadow: 2px 2px 4px red;
 }
 body {
     width: 100vw;
@@ -19,20 +31,65 @@ body {
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    background-image: url('../assets/img/background.jpg');
+    background-size: cover;
     #container {
+        box-shadow: 1px 1px 30px 1px black;
         overflow: hidden;
         max-width: 1200px;
         width: 1200px;
         height: 70vh;
         border-radius: 50px;
-        background-image: url'../assets/clouds.png';
-        background-color: rgba(0,0,0, .65);
+        background-color: rgba(0,0,0,1);
         display: flex;
         justify-content: center;
         align-items: center;
         #homeScreen{
             font-family: arcade;
             color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            height: 80%;
+            .buttons {
+                font-family: arcade;
+                text-align: center;
+                button {
+                    margin-top: 40px;
+                    padding: 20px 70px;
+                    font-size: 1.5rem;
+                    font-weight: bold;
+                    background-color: red;
+                    color: white;
+                    border-radius: 50px;
+                }
+            }
+        }
+        #gameOverScreen{
+            font-family: arcade;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            height: 80%;
+            #scor {
+                font-size: 1.5rem;
+            }
+            .buttons {
+                font-family: arcade;
+                text-align: center;
+                button {
+                    margin-top: 40px;
+                    padding: 20px 70px;
+                    font-size: 1.5rem;
+                    font-weight: bold;
+                    background-color: red;
+                    color: white;
+                    border-radius: 50px;
+                }
+            }
         }
     
     }

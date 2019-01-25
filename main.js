@@ -2,16 +2,12 @@
 function main() {
     var homeScreen =
         `<div id="homeScreen">
-             <h1>HOMEEEEE</h1>
-             <div class="input">
-               <input type="text" placeholder="Player's Name"></input>
-             </div>
+             <h1>SUPER DJ BROS</h1>
              <div class="buttons">
-               <button id="empezar" class="button button-start">INSERT COIN</button>
-               <button class="button button-rules">RULES</button>
+                <p>Press &nbsp;&nbsp;&nbsp; the &nbsp;&nbsp;&nbsp; button &nbsp;&nbsp;&nbsp; to &nbsp;&nbsp;&nbsp; start</p>
+               <button id="empezar" class="button button-start">START</button>
              </div>
              <div class="image">
-               <img src='./Images/Map.jpg'>
              </div>
           </div>`;
     var gameScreen =
@@ -20,14 +16,16 @@ function main() {
             <canvas id="canvas" width="1200" height="610"></canvas>
         </div>`;
     var gameOverScreen =
-        `<div id="gameScreen">
-            <h1>gameover</h1>
-            <p id="scor"></p>
-            <div class="buttons">
-                <button id="empezar" class="button button-start">INSERT COIN</button>
-                <button class="button button-rules">RULES</button>
-            </div>
-        </div>`;
+        `<div id="gameOverScreen">
+             <h1>GAME OVER</h1>
+             <p id="scor"></p>
+             <div class="buttons">
+                <p>Push &nbsp;&nbsp;&nbsp; the &nbsp;&nbsp;&nbsp; button &nbsp;&nbsp;&nbsp; to &nbsp;&nbsp;&nbsp; play &nbsp;&nbsp;&nbsp; again</p>
+               <button id="empezar" class="button button-start">TRY AGAIN</button>
+             </div>
+             <div class="image">
+             </div>
+          </div>`;
     // Funcion que añade al elemento con id container el html que se le pasa en la variable del atributo
     function buildScreen(html) {
         var container = document.getElementById('container');

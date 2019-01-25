@@ -6,6 +6,8 @@ function Game(canvas, gameEndHandler) {
     this.enemy = [];
     this.platforms = [];
     this.vinilos = [];
+    this.top = canvas.height-275;
+    this.bottom = canvas.height - 75 ;
     this.gameEndHandler = gameEndHandler;
     this.loopId;
     this.keyLeft = false;
@@ -97,13 +99,15 @@ Game.prototype.createEnemy = function() {
     }
 }
 Game.prototype.createLevel = function(){
-    this.platforms.push(new Platform(canvas, 0, canvas.height - 75, true, canvas.width + 550, 200));
-    this.platforms.push(new Platform(canvas, canvas.width + 850, canvas.height - 75, true, canvas.width , 200));
-    this.platforms.push(new Platform(canvas, canvas.width + 1050, canvas.height - 75, true, canvas.width , 200));
-    this.platforms.push(new Platform(canvas, canvas.width * 2 + 1300, canvas.height - 75, true, canvas.width , 200));
-    this.platforms.push(new Platform(canvas, canvas.width, canvas.height-275, false, 350, 50));
+    this.platforms.push(new Platform(canvas, 0, this.bottom, true, canvas.width + 550, 200));
+    this.platforms.push(new Platform(canvas, canvas.width + 850, this.bottom, true, canvas.width , 200));
+    this.platforms.push(new Platform(canvas, canvas.width + 1050, this.bottom, true, canvas.width , 200));
+    this.platforms.push(new Platform(canvas, canvas.width + 1250, this.top, false, 350 , 50));
+    this.platforms.push(new Platform(canvas, canvas.width * 2 + 1300, this.bottom, true, canvas.width , 200));
+    this.platforms.push(new Platform(canvas, canvas.width, this.top, false, 350, 50));
     this.vinilos.push(new Vinilo(canvas, canvas.width + 300 , canvas.height -325));
     this.vinilos.push(new Vinilo(canvas, canvas.width * 2 + 1800 , canvas.height -125));
+    this.vinilos.push(new Vinilo(canvas, canvas.width + 1400 , canvas.height -525));
 }
 Game.prototype.onKeyPress = function(){
     this.player.jump();
